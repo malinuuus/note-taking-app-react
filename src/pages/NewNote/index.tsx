@@ -1,8 +1,13 @@
 import { Link } from "react-router-dom"
 import { Button, Header } from "../../styles"
 import { NoteForm } from "../../components/NoteForm"
+import { Note } from "../../App"
 
-export const NewNote = () => {
+export type NewNoteProps = {
+  onSubmit: (newNote: Note) => void
+}
+
+export const NewNote = ({ onSubmit }: NewNoteProps) => {
   return (
     <div>
       <Header>
@@ -11,7 +16,7 @@ export const NewNote = () => {
           <Button>{'<'}</Button>
         </Link>
       </Header>
-      <NoteForm />
+      <NoteForm onSubmit={onSubmit} />
     </div>
   )
 }

@@ -6,7 +6,7 @@ type NoteProps = {
 }
 
 export const Note = ({ note }: NoteProps) => {
-  const date = note.createdAt.toLocaleDateString('en-GB');
+  const date = `${note.createdAt.toLocaleDateString('en-GB')} ${note.createdAt.getHours()}:${note.createdAt.getMinutes()}`;
 
   return (
     <NoteElement to={`/${note.id}`}>

@@ -24,11 +24,15 @@ export type Note = {
 function App() {
   const [notes, setNotes] = useState<Note[]>(testNotes);
 
+  const handleNewNote = (newNote: Note) => {
+    setNotes([...notes, newNote]);
+  }
+
   return (
     <Router>
       <Routes>
         <Route path='/' element={<MainPage notes={notes} />} />
-        <Route path='/new' element={<NewNote />} />
+        <Route path='/new' element={<NewNote onSubmit={handleNewNote} />} />
         <Route path='/:id'>
           <Route index element={<NotePage />} />
           <Route path='edit' element={<EditNote />} />
