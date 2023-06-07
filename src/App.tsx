@@ -28,13 +28,18 @@ function App() {
     setNotes([...notes, newNote]);
   }
 
+  const handleNoteDelete = (noteId: string) => {
+    const newNotes = notes.filter(note => note.id !== noteId);
+    setNotes(newNotes);
+  }
+
   return (
     <Router>
       <Routes>
         <Route path='/' element={<MainPage notes={notes} />} />
         <Route path='/new' element={<NewNote onSubmit={handleNewNote} />} />
         <Route path='/:id'>
-          <Route index element={<NotePage />} />
+          <Route index element={<NotePage notes={notes} onDelete={handleNoteDelete} />} />
           <Route path='edit' element={<EditNote />} />
         </Route>
         <Route path='*' element={<NotFound />} />
