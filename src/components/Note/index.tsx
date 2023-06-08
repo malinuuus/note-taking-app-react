@@ -1,17 +1,20 @@
 import { Note as NoteType } from "../../App"
-import { Date, NoteElement } from "./styles";
+import { dateFormat, timeFormat } from "../../utils/dateFormat";
+import { Date as DateElement, NoteElement } from "./styles";
 
 type NoteProps = {
   note: NoteType
 }
 
 export const Note = ({ note }: NoteProps) => {
-  const date = `${note.createdAt.toLocaleDateString('en-GB')} ${note.createdAt.getHours()}:${note.createdAt.getMinutes()}`;
-
   return (
     <NoteElement to={`/${note.id}`}>
       <p>{note.title}</p>
-      <Date>{date}</Date>
+      {note.updatedAt.toDateString() === new Date().toDateString() ? (
+        <DateElement>{timeFormat(note.updatedAt)}</DateElement>
+      ) : (
+        <DateElement>{dateFormat(note.updatedAt)}</DateElement>
+      )}
     </NoteElement>
   )
 }

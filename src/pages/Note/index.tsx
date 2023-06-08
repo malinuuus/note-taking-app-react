@@ -2,6 +2,7 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 import { Note as NoteType } from "../../App";
 import { ElementsGroup, Date, DeleteButton } from "./styles";
 import { Button, Header } from "../../styles";
+import { dateFormat, timeFormat } from "../../utils/dateFormat";
 
 type NoteProps = {
   notes: NoteType[]
@@ -29,7 +30,7 @@ export const Note = ({ notes, onDelete }: NoteProps) => {
           </Link>
         </ElementsGroup>
       </Header>
-      <Date>Last updated on {note.updatedAt.toDateString()} at {note.updatedAt.getHours()}:{note.updatedAt.getMinutes()}</Date>
+      <Date>Last updated on {dateFormat(note.updatedAt)} at {timeFormat(note.updatedAt)}</Date>
       {note.content.split('\n').map(paragraph => (
         <p style={{minHeight: '1em'}}>{paragraph}</p>
       ))}
