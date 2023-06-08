@@ -1,3 +1,4 @@
+import { useMemo, useState } from 'react'
 import { Link } from "react-router-dom"
 import { Note } from "../../App"
 import { Note as NoteElement } from '../../components/Note'
@@ -9,6 +10,15 @@ type MainPageProps = {
 }
 
 export const MainPage = ({ notes }: MainPageProps) => {
+  const [searchValue, setSearchValue] = useState<string>('');
+
+  const filteredNotes = useMemo(() => {
+    return notes.filter(({ title, content }) => {
+      const lowerVal = searchValue.toLowerCase();
+      return title.toLowerCase().includes(lowerVal) || content.toLowerCase().includes(lowerVal);
+    });
+  }, [searchValue, notes])
+
   return (
     <div>
       <Header>
@@ -19,10 +29,21 @@ export const MainPage = ({ notes }: MainPageProps) => {
       </Header>
       <InputGroup>
         <span>🔍</span>
-        <Input type="text" placeholder="search notes..." />
+        <Input
+          type="text"
+          placeholder="search notes..."
+          value={searchValue}
+          onChange={(e) => setSearchValue(e.target.value)}
+        />
       </InputGroup>
       <NotesContainer>
-        {notes.map(note => <NoteElement key={note.id} note={note} />)}
+      {filteredNotes.length > 0 ? (
+        <>
+          {filteredNotes.map(note => <NoteElement key={note.id} note={note} />)}
+        </>
+      ) : (
+        <p>Nothing found</p>
+      )}
       </NotesContainer>
     </div>
   )

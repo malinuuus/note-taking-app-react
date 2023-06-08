@@ -11,10 +11,10 @@ type NoteProps = {
 export const Note = ({ notes, onDelete }: NoteProps) => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const note: NoteType = notes.filter(noteElem => noteElem.id == id)[0];
+  const note: NoteType | undefined = notes.find(noteElem => noteElem.id == id);
 
   const handleDelete = () => {
-    onDelete(note.id);
+    onDelete(note!.id);
     navigate('/');
   }
 
