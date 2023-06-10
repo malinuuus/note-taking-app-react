@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { NewNoteProps } from "../../pages/NewNote"
-import { Button } from "../../styles"
+import { Button, DisabledButton } from "../../styles"
 import { InputGroup, RequiredMessage } from "./styles"
 import { useNavigate } from 'react-router-dom';
 
@@ -75,9 +75,17 @@ export const NoteForm = ({ onSubmit, currentData }: NewNoteProps) => {
           onChange={handleContentChange}
         ></textarea>
       </InputGroup>
-      <Button type="submit">
-        {currentData ? "Update" : "Add"}
-      </Button>
+      {currentData ? (
+        <>
+          {currentData.title === titleValue && currentData.content === contentValue ? (
+            <DisabledButton type='submit' disabled>Update</DisabledButton>
+          ) : (
+            <Button type='submit'>Update</Button>
+          )}
+        </>
+      ) : (
+        <Button type='submit'>Add</Button>
+      )}
     </form>
   )
 }

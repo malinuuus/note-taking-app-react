@@ -15,6 +15,12 @@ export const Button = styled.button`
   }
 `;
 
+export const DisabledButton = styled(Button)`
+  pointer-events: none;
+  color: #dbdbdb;
+  border-color: #dbdbdb;
+`;
+
 export const Header = styled.div`
   display: flex;
   justify-content: space-between;
