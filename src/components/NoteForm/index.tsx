@@ -1,14 +1,22 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { NewNoteProps } from "../../pages/NewNote"
 import { Button } from "../../styles"
 import { InputGroup, RequiredMessage } from "./styles"
 import { useNavigate } from 'react-router-dom';
 
-export const NoteForm = ({ onSubmit }: NewNoteProps) => {
+export const NoteForm = ({ onSubmit, currentData }: NewNoteProps) => {
   const [titleValue, setTitleValue] = useState<string>('');
   const [contentValue, setContentValue] = useState<string>('');
   const [isValueEmpty, setIsValueEmpty] = useState<boolean>(false);
   const navigate = useNavigate();
+  console.log(currentData);
+
+  useEffect(() => {
+    if (currentData) {
+      setTitleValue(currentData.title);
+      setContentValue(currentData.content);
+    }
+  }, [])
 
   const removeWarning = (value: string) => {
     if (value.trim() && isValueEmpty) {
@@ -31,11 +39,9 @@ export const NoteForm = ({ onSubmit }: NewNoteProps) => {
 
     if (titleValue.trim() && contentValue.trim()) {
       onSubmit({
-        id: new Date().valueOf().toString(),
         title: titleValue,
         content: contentValue,
         tags: [],
-        createdAt: new Date(),
         updatedAt: new Date()
       });
       navigate('/');
@@ -69,7 +75,9 @@ export const NoteForm = ({ onSubmit }: NewNoteProps) => {
           onChange={handleContentChange}
         ></textarea>
       </InputGroup>
-      <Button type="submit">Add</Button>
+      <Button type="submit">
+        {currentData ? "Update" : "Add"}
+      </Button>
     </form>
   )
 }

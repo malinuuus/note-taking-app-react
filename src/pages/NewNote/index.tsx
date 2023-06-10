@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom"
 import { Button, Header } from "../../styles"
 import { NoteForm } from "../../components/NoteForm"
-import { Note } from "../../App"
+import { NewNote as NewNoteType } from "../../App"
 
 export type NewNoteProps = {
-  onSubmit: (newNote: Note) => void
+  onSubmit: (newNote: NewNoteType) => void
+  currentData?: NewNoteType
 }
 
 export const NewNote = ({ onSubmit }: NewNoteProps) => {

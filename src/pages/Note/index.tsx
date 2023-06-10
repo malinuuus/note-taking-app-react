@@ -3,6 +3,7 @@ import { Note as NoteType } from "../../App";
 import { ElementsGroup, Date, DeleteButton } from "./styles";
 import { Button, Header } from "../../styles";
 import { dateFormat, timeFormat } from "../../utils/dateFormat";
+import { NoteNotFound } from "../../components/NoteNotFound";
 
 type NoteProps = {
   notes: NoteType[]
@@ -25,20 +26,20 @@ export const Note = ({ notes, onDelete }: NoteProps) => {
         <h1>{note.title}</h1>
         <ElementsGroup>
           <DeleteButton onClick={handleDelete}>Delete</DeleteButton>
+          <Link to='./edit'>
+            <Button>edit</Button>
+          </Link>
           <Link to='..'>
             <Button>{'<'}</Button>
           </Link>
         </ElementsGroup>
       </Header>
       <Date>Last updated on {dateFormat(note.updatedAt)} at {timeFormat(note.updatedAt)}</Date>
-      {note.content.split('\n').map(paragraph => (
-        <p style={{minHeight: '1em'}}>{paragraph}</p>
+      {note.content.split('\n').map((paragraph, i) => (
+        <p key={i} style={{minHeight: '1em'}}>{paragraph}</p>
       ))}
     </div>
   ) : (
-    <>
-      <p>This note doesn't exist</p>
-      <Link to='/'>Go back to the home page</Link>
-    </>
+    <NoteNotFound />
   )
 }
