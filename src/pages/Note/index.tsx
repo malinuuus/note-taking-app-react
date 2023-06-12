@@ -1,6 +1,6 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { Note as NoteType } from "../../App";
-import { ElementsGroup, Date, DeleteButton } from "./styles";
+import { ElementsGroup, Date, DeleteButton, Tag, TagsWrapper } from "./styles";
 import { Button, Header } from "../../styles";
 import { dateFormat, timeFormat } from "../../utils/dateFormat";
 import { NoteNotFound } from "../../components/NoteNotFound";
@@ -34,6 +34,11 @@ export const Note = ({ notes, onDelete }: NoteProps) => {
           </Link>
         </ElementsGroup>
       </Header>
+      <TagsWrapper>
+        {note.tags.map(({id, label}) => (
+          <Tag key={id}>{label}</Tag>
+        ))}
+      </TagsWrapper>
       <Date>Last updated on {dateFormat(note.updatedAt)} at {timeFormat(note.updatedAt)}</Date>
       {note.content.split('\n').map((paragraph, i) => (
         <p key={i} style={{minHeight: '1em'}}>{paragraph}</p>
