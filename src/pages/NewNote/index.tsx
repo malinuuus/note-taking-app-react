@@ -19,7 +19,11 @@ export const NewNote = ({ onSubmit, availableTags, onTagCreate }: NewNoteProps) 
           <Button>{'<'}</Button>
         </Link>
       </Header>
-      <NoteForm onSubmit={onSubmit} availableTags={availableTags} onTagCreate={onTagCreate} />
+      <NoteForm
+        onSubmit={onSubmit}
+        availableTags={availableTags}
+        onTagCreate={onTagCreate}
+      />
     </div>
   )
 }

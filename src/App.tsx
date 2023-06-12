@@ -64,7 +64,7 @@ function App() {
         <Route path='/new' element={<NewNote onSubmit={handleNewNote} availableTags={tags} onTagCreate={handleTagCreate} />} />
         <Route path='/:id'>
           <Route index element={<NotePage notes={notes} onDelete={handleNoteDelete} />} />
-          <Route path='edit' element={<EditNote onSubmit={handleNoteEdit} notes={notes} />} />
+          <Route path='edit' element={<EditNote onSubmit={handleNoteEdit} notes={notes} availableTags={tags} onTagCreate={handleTagCreate} />} />
         </Route>
         <Route path='*' element={<NotFound />} />
       </Routes>

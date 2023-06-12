@@ -18,6 +18,7 @@ export const NoteForm = ({ onSubmit, availableTags, onTagCreate, currentData }: 
     if (currentData) {
       setTitleValue(currentData.title);
       setContentValue(currentData.content);
+      setSelectedTags(currentData.tags);
     }
   }, [])
 
@@ -140,7 +141,10 @@ export const NoteForm = ({ onSubmit, availableTags, onTagCreate, currentData }: 
       </InputGroup>
       {currentData ? (
         <>
-          {currentData.title === titleValue && currentData.content === contentValue ? (
+          {
+            currentData.title === titleValue &&
+            currentData.content === contentValue &&
+            currentData.tags === selectedTags ? (
             <DisabledButton type='submit' disabled>Update</DisabledButton>
           ) : (
             <Button type='submit'>Update</Button>
