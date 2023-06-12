@@ -40,3 +40,14 @@ export const testNotes = [
     updatedAt: new Date(2023, 5, 6, 13, 41)
   }
 ]
+
+export const testTags = [
+  {
+    id: '1',
+    label: 'important'
+  },
+  {
+    id: '2',
+    label: 'to do'
+  }
+];

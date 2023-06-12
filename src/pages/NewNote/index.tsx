@@ -1,14 +1,16 @@
 import { Link } from "react-router-dom"
 import { Button, Header } from "../../styles"
 import { NoteForm } from "../../components/NoteForm"
-import { NewNote as NewNoteType } from "../../App"
+import { NewNote as NewNoteType, Tag } from "../../App"
 
 export type NewNoteProps = {
   onSubmit: (newNote: NewNoteType) => void
+  availableTags: Tag[]
+  onTagCreate: (newTag: Tag) => void
   currentData?: NewNoteType
 }
 
-export const NewNote = ({ onSubmit }: NewNoteProps) => {
+export const NewNote = ({ onSubmit, availableTags, onTagCreate }: NewNoteProps) => {
   return (
     <div>
       <Header>
@@ -17,7 +19,7 @@ export const NewNote = ({ onSubmit }: NewNoteProps) => {
           <Button>{'<'}</Button>
         </Link>
       </Header>
-      <NoteForm onSubmit={onSubmit} />
+      <NoteForm onSubmit={onSubmit} availableTags={availableTags} onTagCreate={onTagCreate} />
     </div>
   )
 }

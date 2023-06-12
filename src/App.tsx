@@ -5,9 +5,9 @@ import { NewNote } from './pages/NewNote';
 import { Note as NotePage } from './pages/Note';
 import { EditNote } from './pages/EditNote';
 import { NotFound } from './pages/NotFound';
-import { testNotes } from './testNotes';
+import { testNotes, testTags } from './testNotes';
 
-type Tag = {
+export type Tag = {
   id: string
   label: string
 }
@@ -26,6 +26,7 @@ export type Note = {
 
 function App() {
   const [notes, setNotes] = useState<Note[]>(testNotes);
+  const [tags, setTags] = useState<Tag[]>(testTags);
 
   const handleNewNote = (newNote: NewNote) => {
     setNotes([...notes, {
@@ -52,11 +53,15 @@ function App() {
     setNotes(newNotes);
   }
 
+  const handleTagCreate = (newTag: Tag) => {
+    setTags([...tags, newTag])
+  }
+
   return (
     <Router>
       <Routes>
         <Route path='/' element={<MainPage notes={notes} />} />
-        <Route path='/new' element={<NewNote onSubmit={handleNewNote} />} />
+        <Route path='/new' element={<NewNote onSubmit={handleNewNote} availableTags={tags} onTagCreate={handleTagCreate} />} />
         <Route path='/:id'>
           <Route index element={<NotePage notes={notes} onDelete={handleNoteDelete} />} />
           <Route path='edit' element={<EditNote onSubmit={handleNoteEdit} notes={notes} />} />
