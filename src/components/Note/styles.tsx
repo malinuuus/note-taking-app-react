@@ -1,7 +1,19 @@
-import { styled } from 'styled-components'
+import { keyframes, styled } from 'styled-components'
 import { Link } from 'react-router-dom'
+import { hoverGrayStyle } from '../../styles';
 
-export const NoteElement = styled(Link)`
+const onLoadAnimation = keyframes`
+    0% {
+      opacity: 0;
+      transform: translateY(-20%);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+`;
+
+export const NoteElement = styled(Link)<{ $delay: number }>`
   -webkit-box-shadow: 8px 8px 29px -11px rgba(66, 68, 90, 1);
   -moz-box-shadow: 8px 8px 29px -11px rgba(66, 68, 90, 1);
   box-shadow: 8px 8px 29px -11px rgba(66, 68, 90, 1);
@@ -12,12 +24,12 @@ export const NoteElement = styled(Link)`
   position: relative;
   border-radius: 10px;
   text-decoration: none;
-  transition: transform 250ms;
   color: inherit;
+  ${hoverGrayStyle}
 
-  &:hover {
-    transform: translate(-5px, -5px);
-  }
+  opacity: 0;
+  transform: translateY(-20%);
+  animation: .5s ${onLoadAnimation} ease-in ${props => `${props.$delay}s`} forwards;
 `;
 
 export const Date = styled.span`

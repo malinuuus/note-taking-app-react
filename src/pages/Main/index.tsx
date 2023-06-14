@@ -9,6 +9,8 @@ type MainPageProps = {
   notes: Note[]
 }
 
+const animationDelayFactor = .2;
+
 export const MainPage = ({ notes }: MainPageProps) => {
   const [searchValue, setSearchValue] = useState<string>('');
 
@@ -39,7 +41,13 @@ export const MainPage = ({ notes }: MainPageProps) => {
       <NotesContainer>
       {filteredNotes.length > 0 ? (
         <>
-          {filteredNotes.map(note => <NoteElement key={note.id} note={note} />)}
+          {filteredNotes.map((note, i) => (
+            <NoteElement
+              key={note.id}
+              note={note}
+              animationDelay={i * animationDelayFactor}
+            />
+          ))}
         </>
       ) : (
         <p>Nothing found</p>

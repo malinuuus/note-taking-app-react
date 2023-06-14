@@ -1,4 +1,12 @@
-import { styled } from "styled-components";
+import { css, styled } from "styled-components";
+
+export const hoverGrayStyle = css`
+  transition: background-color 250ms;
+
+  &:hover {
+    background-color: #eaeaea;
+  }
+`;
 
 // global styles
 export const Button = styled.button`
@@ -8,11 +16,7 @@ export const Button = styled.button`
   border: 1px solid #000;
   background-color: inherit;
   cursor: pointer;
-  transition: background-color 250ms;
-
-  &:hover {
-    background-color: #eaeaea;
-  }
+  ${hoverGrayStyle}
 `;
 
 export const DisabledButton = styled(Button)`
