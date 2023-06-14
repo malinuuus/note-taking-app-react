@@ -29,11 +29,11 @@ function App() {
   const [tags, setTags] = useState<Tag[]>(testTags);
 
   const handleNewNote = (newNote: NewNote) => {
-    setNotes([...notes, {
+    setNotes([{
       ...newNote,
       id: new Date().valueOf().toString(),
       createdAt: new Date()
-    }]);
+    }, ...notes]);
   }
 
   const handleNoteDelete = (noteId: string) => {
@@ -50,7 +50,9 @@ function App() {
       } : note;
     })
 
-    setNotes(newNotes);
+    setNotes([...newNotes].sort((a, b) => {
+      return b.updatedAt.getTime() - a.updatedAt.getTime();
+    }));
   }
 
   const handleTagCreate = (newTag: Tag) => {
