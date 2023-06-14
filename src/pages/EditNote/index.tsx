@@ -2,7 +2,7 @@ import { Link, useParams } from "react-router-dom"
 import { NewNote, Note, Tag } from "../../App"
 import { Button, Header } from "../../styles"
 import { NoteForm } from "../../components/NoteForm"
-import { NoteNotFound } from "../../components/NoteNotFound"
+import { NotFound } from "../NotFound"
 
 type EditNoteProps = {
   onSubmit: (id: string, newData: NewNote) => void
@@ -31,6 +31,6 @@ export const EditNote = ({ onSubmit, notes, availableTags, onTagCreate }: EditNo
       />
     </div>
   ) : (
-    <NoteNotFound />
+    <NotFound title={'This note doesn\'t exist'} />
   )
 }

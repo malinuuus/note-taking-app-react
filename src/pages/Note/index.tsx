@@ -1,9 +1,10 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { Note as NoteType } from "../../App";
 import { ElementsGroup, Date, DeleteButton, Tag, TagsWrapper } from "./styles";
-import { Button, Header } from "../../styles";
+import { Button, FAIcon, Header } from "../../styles";
 import { dateFormat, timeFormat } from "../../utils/dateFormat";
-import { NoteNotFound } from "../../components/NoteNotFound";
+import { faTrashCan, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
+import { NotFound } from "../NotFound";
 
 type NoteProps = {
   notes: NoteType[]
@@ -25,9 +26,15 @@ export const Note = ({ notes, onDelete }: NoteProps) => {
       <Header>
         <h1>{note.title}</h1>
         <ElementsGroup>
-          <DeleteButton onClick={handleDelete}>Delete</DeleteButton>
+          <DeleteButton onClick={handleDelete}>
+            <FAIcon icon={faTrashCan} />
+            <span>Delete</span>
+          </DeleteButton>
           <Link to='./edit'>
-            <Button>edit</Button>
+            <Button>
+              <FAIcon icon={faPenToSquare} />
+              <span>Edit</span>
+            </Button>
           </Link>
           <Link to='..'>
             <Button>{'<'}</Button>
@@ -45,6 +52,6 @@ export const Note = ({ notes, onDelete }: NoteProps) => {
       ))}
     </div>
   ) : (
-    <NoteNotFound />
+    <NotFound title={'This note doesn\'t exist'} />
   )
 }

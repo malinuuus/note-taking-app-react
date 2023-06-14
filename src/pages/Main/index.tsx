@@ -3,8 +3,9 @@ import { Link } from "react-router-dom"
 import { Note } from "../../App"
 import { Note as NoteElement } from '../../components/Note'
 import { Input, InputGroup, NotesContainer } from "./style"
-import { Header, Button } from "../../styles"
-
+import { Header, Button, FAIcon } from "../../styles"
+import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons'
+ 
 type MainPageProps = {
   notes: Note[]
 }
@@ -26,11 +27,13 @@ export const MainPage = ({ notes }: MainPageProps) => {
       <Header>
         <h1>My notes</h1>
         <Link to='/new'>
-          <Button>Add</Button>
+          <Button>
+            <FAIcon icon={faPlus} />
+          </Button>
         </Link>
       </Header>
       <InputGroup>
-        <span>🔍</span>
+        <FAIcon icon={faMagnifyingGlass} />
         <Input
           type="text"
           placeholder="search notes..."

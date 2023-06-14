@@ -1,3 +1,4 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { css, styled } from "styled-components";
 
 export const hoverGrayStyle = css`
@@ -29,3 +30,7 @@ export const Header = styled.div`
   display: flex;
   justify-content: space-between;
 `;
+
+export const FAIcon = styled(FontAwesomeIcon)`
+  margin: 0 5px;
+`
