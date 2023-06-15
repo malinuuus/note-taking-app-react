@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { NewNoteProps } from "../../pages/NewNote"
 import { Button, DisabledButton } from "../../styles"
 import { InputGroup, RequiredMessage } from "./styles"
@@ -6,8 +6,15 @@ import { useNavigate } from 'react-router-dom';
 import CreatableSelect from 'react-select/creatable'
 import { Tag } from '../../App';
 import { MultiValue } from 'react-select';
+import { NotesContext, NotesContextType } from '../../context/NotesContext';
 
-export const NoteForm = ({ onSubmit, availableTags, onTagCreate, currentData }: NewNoteProps) => {
+export const NoteForm = ({ currentData }: NewNoteProps) => {
+  const {
+    tags: availableTags,
+    handleTagCreate: onTagCreate,
+    handleNewNote: onSubmit
+  } = useContext(NotesContext) as NotesContextType;
+  
   const [titleValue, setTitleValue] = useState<string>('');
   const [contentValue, setContentValue] = useState<string>('');
   const [isValueEmpty, setIsValueEmpty] = useState<boolean>(false);
