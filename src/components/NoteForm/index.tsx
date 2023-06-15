@@ -1,18 +1,22 @@
 import { useState, useEffect, useContext } from 'react';
-import { NewNoteProps } from "../../pages/NewNote"
 import { Button, DisabledButton } from "../../styles"
 import { InputGroup, RequiredMessage } from "./styles"
 import { useNavigate } from 'react-router-dom';
 import CreatableSelect from 'react-select/creatable'
-import { Tag } from '../../App';
+import { Note, Tag } from '../../App';
 import { MultiValue } from 'react-select';
 import { NotesContext, NotesContextType } from '../../context/NotesContext';
 
-export const NoteForm = ({ currentData }: NewNoteProps) => {
+type NoteFormProps = {
+  currentData?: Note
+}
+
+export const NoteForm = ({ currentData }: NoteFormProps) => {
   const {
     tags: availableTags,
     handleTagCreate: onTagCreate,
-    handleNewNote: onSubmit
+    handleNewNote: onSubmit,
+    handleNoteEdit
   } = useContext(NotesContext) as NotesContextType;
   
   const [titleValue, setTitleValue] = useState<string>('');
@@ -49,12 +53,14 @@ export const NoteForm = ({ currentData }: NewNoteProps) => {
     e.preventDefault();
 
     if (titleValue.trim() && contentValue.trim()) {
-      onSubmit({
+      const newNote = {
         title: titleValue,
         content: contentValue,
         tags: selectedTags,
         updatedAt: new Date()
-      });
+      };
+
+      currentData ? handleNoteEdit(currentData.id, newNote) : onSubmit(newNote);
       navigate('/');
     } else {
       setIsValueEmpty(true);

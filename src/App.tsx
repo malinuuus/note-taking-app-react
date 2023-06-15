@@ -61,14 +61,14 @@ function App() {
   }
 
   return (
-    <NotesContext.Provider value={{ notes, tags, handleNewNote, handleTagCreate }}>
+    <NotesContext.Provider value={{ notes, tags, handleNewNote, handleTagCreate, handleNoteEdit }}>
       <Router>
         <Routes>
           <Route path='/' element={<MainPage />} />
           <Route path='/new' element={<NewNote />} />
           <Route path='/:id'>
             <Route index element={<NotePage notes={notes} onDelete={handleNoteDelete} />} />
-            <Route path='edit' element={<EditNote onSubmit={handleNoteEdit} notes={notes} availableTags={tags} onTagCreate={handleTagCreate} />} />
+            <Route path='edit' element={<EditNote notes={notes} />} />
           </Route>
           <Route path='*' element={<NotFound title='Page not found' />} />
         </Routes>
