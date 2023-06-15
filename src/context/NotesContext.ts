@@ -6,6 +6,7 @@ export type NotesContextType = {
   tags: Tag[]
   handleNewNote: (newNote: NewNote) => void
   handleTagCreate: (newTag: Tag) => void
+  handleNoteEdit: (id: string, newData: NewNote) => void
 }
 
 export const NotesContext = createContext<NotesContextType | null>(null);

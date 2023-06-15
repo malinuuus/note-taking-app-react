@@ -1,21 +1,18 @@
 import { Link, useParams } from "react-router-dom"
-import { NewNote, Note, Tag } from "../../App"
+import { Note } from "../../App"
 import { Button, Header } from "../../styles"
 import { NoteForm } from "../../components/NoteForm"
 import { NotFound } from "../NotFound"
 
 type EditNoteProps = {
-  onSubmit: (id: string, newData: NewNote) => void
   notes: Note[]
-  availableTags: Tag[]
-  onTagCreate: (newTag: Tag) => void
 }
 
-export const EditNote = ({ onSubmit, notes, availableTags, onTagCreate }: EditNoteProps) => {
+export const EditNote = ({ notes }: EditNoteProps) => {
   const { id } = useParams();
   const note: Note | undefined = notes.find(noteElem => noteElem.id == id);
 
-  return note ?(
+  return note ? (
     <div>
       <Header>
         <h1>Edit note</h1>
@@ -23,12 +20,7 @@ export const EditNote = ({ onSubmit, notes, availableTags, onTagCreate }: EditNo
           <Button>{'<'}</Button>
         </Link>
       </Header>
-      <NoteForm
-        onSubmit={newNote => onSubmit(id!, newNote)}
-        availableTags={availableTags}
-        currentData={note}
-        onTagCreate={onTagCreate}
-      />
+      <NoteForm currentData={note} />
     </div>
   ) : (
     <NotFound title={'This note doesn\'t exist'} />
