@@ -25,6 +25,7 @@ export const NoteElement = styled(Link)<{ $delay: number }>`
   border-radius: 10px;
   text-decoration: none;
   color: inherit;
+  inline-size: min-content;
   ${hoverGrayStyle}
 
   opacity: 0;

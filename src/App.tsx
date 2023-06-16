@@ -6,6 +6,7 @@ import { Note as NotePage } from './pages/Note';
 import { EditNote } from './pages/EditNote';
 import { NotFound } from './pages/NotFound';
 import { testNotes, testTags } from './testNotes';
+import { NotesContext } from './context/NotesContext';
 
 export type Tag = {
   id: string
@@ -25,7 +26,13 @@ export type Note = {
 } & NewNote
 
 function App() {
-  const [notes, setNotes] = useState<Note[]>(testNotes);
+  const [notes, setNotes] = useState<Note[]>(testNotes.map(note => {
+    return {
+      ...note,
+      createdAt: new Date(note.createdAt),
+      updatedAt: new Date(note.updatedAt)
+    }
+  }));
   const [tags, setTags] = useState<Tag[]>(testTags);
 
   const handleNewNote = (newNote: NewNote) => {
@@ -60,17 +67,19 @@ function App() {
   }
 
   return (
-    <Router>
-      <Routes>
-        <Route path='/' element={<MainPage notes={notes} />} />
-        <Route path='/new' element={<NewNote onSubmit={handleNewNote} availableTags={tags} onTagCreate={handleTagCreate} />} />
-        <Route path='/:id'>
-          <Route index element={<NotePage notes={notes} onDelete={handleNoteDelete} />} />
-          <Route path='edit' element={<EditNote onSubmit={handleNoteEdit} notes={notes} availableTags={tags} onTagCreate={handleTagCreate} />} />
-        </Route>
-        <Route path='*' element={<NotFound title='Page not found' />} />
-      </Routes>
-    </Router>
+    <NotesContext.Provider value={{ notes, tags, handleNewNote, handleTagCreate, handleNoteEdit }}>
+      <Router>
+        <Routes>
+          <Route path='/' element={<MainPage />} />
+          <Route path='/new' element={<NewNote />} />
+          <Route path='/:id'>
+            <Route index element={<NotePage notes={notes} onDelete={handleNoteDelete} />} />
+            <Route path='edit' element={<EditNote notes={notes} />} />
+          </Route>
+          <Route path='*' element={<NotFound title='Page not found' />} />
+        </Routes>
+      </Router>
+    </NotesContext.Provider>
   )
 }
 

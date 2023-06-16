@@ -1,18 +1,15 @@
-import { useMemo, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 import { Link } from "react-router-dom"
-import { Note } from "../../App"
 import { Note as NoteElement } from '../../components/Note'
 import { Input, InputGroup, NotesContainer } from "./style"
 import { Header, Button, FAIcon } from "../../styles"
 import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons'
- 
-type MainPageProps = {
-  notes: Note[]
-}
+import { NotesContext, NotesContextType } from '../../context/NotesContext'
 
 const animationDelayFactor = .2;
 
-export const MainPage = ({ notes }: MainPageProps) => {
+export const MainPage = () => {
+  const { notes } = useContext(NotesContext) as NotesContextType;
   const [searchValue, setSearchValue] = useState<string>('');
 
   const filteredNotes = useMemo(() => {
