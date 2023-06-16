@@ -26,7 +26,13 @@ export type Note = {
 } & NewNote
 
 function App() {
-  const [notes, setNotes] = useState<Note[]>(testNotes);
+  const [notes, setNotes] = useState<Note[]>(testNotes.map(note => {
+    return {
+      ...note,
+      createdAt: new Date(note.createdAt),
+      updatedAt: new Date(note.updatedAt)
+    }
+  }));
   const [tags, setTags] = useState<Tag[]>(testTags);
 
   const handleNewNote = (newNote: NewNote) => {
