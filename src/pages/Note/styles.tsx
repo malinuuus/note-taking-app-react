@@ -14,10 +14,10 @@ export const ElementsGroup = styled.div`
 `;
 
 export const DeleteButton = styled(Button)`
-  background-color: #ff9f9f;
+  background-color: ${props => props.theme.red};
 
   &:hover {
-    background-color: #ff8484;
+    background-color: ${props => props.theme.redOnHover};
   }
 `;
 

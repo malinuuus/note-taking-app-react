@@ -14,9 +14,9 @@ const onLoadAnimation = keyframes`
 `;
 
 export const NoteElement = styled(Link)<{ $delay: number }>`
-  -webkit-box-shadow: 8px 8px 29px -11px rgba(66, 68, 90, 1);
-  -moz-box-shadow: 8px 8px 29px -11px rgba(66, 68, 90, 1);
-  box-shadow: 8px 8px 29px -11px rgba(66, 68, 90, 1);
+  -webkit-box-shadow: ${props => props.theme.boxShadow};
+  -moz-box-shadow: ${props => props.theme.boxShadow};
+  box-shadow: ${props => props.theme.boxShadow};
   min-width: 200px;
   height: 150px;
   margin: 10px 20px 10px 0;
@@ -25,6 +25,7 @@ export const NoteElement = styled(Link)<{ $delay: number }>`
   border-radius: 10px;
   text-decoration: none;
   color: inherit;
+  background-color: ${props => props.theme.elements};
   inline-size: min-content;
   ${hoverGrayStyle}
 

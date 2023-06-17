@@ -5,7 +5,7 @@ export const hoverGrayStyle = css`
   transition: background-color 250ms;
 
   &:hover {
-    background-color: #eaeaea;
+    background-color: ${props => props.theme.onHover};
   }
 `;
 
@@ -15,15 +15,16 @@ export const Button = styled.button`
   font-family: inherit;
   border-radius: 10px;
   border: 1px solid #000;
-  background-color: inherit;
+  background-color: ${props => props.theme.elements};
+  color: ${props => props.theme.fontColor};
   cursor: pointer;
   ${hoverGrayStyle}
 `;
 
 export const DisabledButton = styled(Button)`
   pointer-events: none;
-  color: #dbdbdb;
-  border-color: #dbdbdb;
+  color: ${props => props.theme.disabledFont};
+  border-color: ${props => props.theme.disabledFont};
 `;
 
 export const Header = styled.div`
@@ -33,4 +34,5 @@ export const Header = styled.div`
 
 export const FAIcon = styled(FontAwesomeIcon)`
   margin: 0 5px;
+  color: ${props => props.theme.fontColor};
 `

@@ -11,7 +11,7 @@ export const NotesContainer = styled.div`
 `;
 
 export const InputGroup = styled.div`
-  background: #eaeaea;
+  background: ${props => props.theme.inputBackground};
   padding: 5px;
   margin: 10px 0;
   border-radius: 10px;
@@ -22,4 +22,5 @@ export const Input = styled.input`
   padding: 5px;
   margin-left: 5px;
   border: none;
+  color: inherit;
 `;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { MainPage } from './pages/Main';
 import { NewNote } from './pages/NewNote';
@@ -7,6 +7,8 @@ import { EditNote } from './pages/EditNote';
 import { NotFound } from './pages/NotFound';
 import { testNotes, testTags } from './testNotes';
 import { NotesContext } from './context/NotesContext';
+import { ThemeProvider } from 'styled-components';
+import { ThemeContext } from './context/ThemeContext';
 
 export type Tag = {
   id: string
@@ -26,6 +28,8 @@ export type Note = {
 } & NewNote
 
 function App() {
+  const { theme } = useContext(ThemeContext);
+
   const [notes, setNotes] = useState<Note[]>(testNotes.map(note => {
     return {
       ...note,
@@ -67,19 +71,21 @@ function App() {
   }
 
   return (
-    <NotesContext.Provider value={{ notes, tags, handleNewNote, handleTagCreate, handleNoteEdit }}>
-      <Router>
-        <Routes>
-          <Route path='/' element={<MainPage />} />
-          <Route path='/new' element={<NewNote />} />
-          <Route path='/:id'>
-            <Route index element={<NotePage notes={notes} onDelete={handleNoteDelete} />} />
-            <Route path='edit' element={<EditNote notes={notes} />} />
-          </Route>
-          <Route path='*' element={<NotFound title='Page not found' />} />
-        </Routes>
-      </Router>
-    </NotesContext.Provider>
+    <ThemeProvider theme={theme}>
+      <NotesContext.Provider value={{ notes, tags, handleNewNote, handleTagCreate, handleNoteEdit }}>
+        <Router>
+          <Routes>
+            <Route path='/' element={<MainPage />} />
+            <Route path='/new' element={<NewNote />} />
+            <Route path='/:id'>
+              <Route index element={<NotePage notes={notes} onDelete={handleNoteDelete} />} />
+              <Route path='edit' element={<EditNote notes={notes} />} />
+            </Route>
+            <Route path='*' element={<NotFound title='Page not found' />} />
+          </Routes>
+        </Router>
+      </NotesContext.Provider>
+    </ThemeProvider>
   )
 }
 

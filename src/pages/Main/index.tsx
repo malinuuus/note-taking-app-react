@@ -3,13 +3,16 @@ import { Link } from "react-router-dom"
 import { Note as NoteElement } from '../../components/Note'
 import { Input, InputGroup, NotesContainer } from "./style"
 import { Header, Button, FAIcon } from "../../styles"
-import { faMagnifyingGlass, faPlus } from '@fortawesome/free-solid-svg-icons'
+import { faMagnifyingGlass, faMoon, faPlus, faSun } from '@fortawesome/free-solid-svg-icons'
 import { NotesContext, NotesContextType } from '../../context/NotesContext'
+import { ElementsGroup } from '../Note/styles'
+import { ThemeContext } from '../../context/ThemeContext'
 
 const animationDelayFactor = .2;
 
 export const MainPage = () => {
   const { notes } = useContext(NotesContext) as NotesContextType;
+  const { themeType, setTheme } = useContext(ThemeContext);
   const [searchValue, setSearchValue] = useState<string>('');
 
   const filteredNotes = useMemo(() => {
@@ -23,11 +26,16 @@ export const MainPage = () => {
     <div>
       <Header>
         <h1>My notes</h1>
-        <Link to='/new'>
-          <Button>
-            <FAIcon icon={faPlus} />
+        <ElementsGroup>
+          <Button onClick={() => setTheme!(themeType === 'dark' ? 'light' : 'dark')}>
+            {themeType === 'dark' ? <FAIcon icon={faSun} /> : <FAIcon icon={faMoon} />}
           </Button>
-        </Link>
+          <Link to='/new'>
+            <Button>
+              <FAIcon icon={faPlus} />
+            </Button>
+          </Link>
+        </ElementsGroup>
       </Header>
       <InputGroup>
         <FAIcon icon={faMagnifyingGlass} />

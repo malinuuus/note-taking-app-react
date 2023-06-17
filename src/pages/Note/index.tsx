@@ -5,6 +5,7 @@ import { Button, FAIcon, Header } from "../../styles";
 import { dateFormat, timeFormat } from "../../utils/dateFormat";
 import { faTrashCan, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { NotFound } from "../NotFound";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
 type NoteProps = {
   notes: NoteType[]
@@ -37,7 +38,9 @@ export const Note = ({ notes, onDelete }: NoteProps) => {
             </Button>
           </Link>
           <Link to='..'>
-            <Button>{'<'}</Button>
+            <Button>
+              <FAIcon icon={faArrowLeft} />
+            </Button>
           </Link>
         </ElementsGroup>
       </Header>

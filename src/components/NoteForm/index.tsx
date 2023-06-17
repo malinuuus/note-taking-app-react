@@ -6,12 +6,14 @@ import CreatableSelect from 'react-select/creatable'
 import { Note, Tag } from '../../App';
 import { MultiValue } from 'react-select';
 import { NotesContext, NotesContextType } from '../../context/NotesContext';
+import { ThemeContext } from '../../context/ThemeContext';
 
 type NoteFormProps = {
   currentData?: Note
 }
 
 export const NoteForm = ({ currentData }: NoteFormProps) => {
+  const { theme } = useContext(ThemeContext);
   const {
     tags: availableTags,
     handleTagCreate: onTagCreate,
@@ -103,10 +105,18 @@ export const NoteForm = ({ currentData }: NoteFormProps) => {
           onCreateOption={handleTagCreate}
           id='tags'
           styles={{
+            option: styles => ({
+              ...styles,
+              backgroundColor: theme.elements,
+              '&:hover': {
+                backgroundColor: theme.onHover
+              }
+            }),
             control: styles => ({
               ...styles,
               borderColor: '#000',
               borderRadius: 0,
+              backgroundColor: theme.elements,
               '&:hover': {
                 borderColor: '#000'
               }

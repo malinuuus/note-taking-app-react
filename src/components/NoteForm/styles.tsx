@@ -10,6 +10,8 @@ export const InputGroup = styled.div<{ $redShadow?: boolean }>`
     padding: 5px;
     font-family: inherit;
     border: 1px solid #000;
+    background-color: ${props => props.theme.elements};
+    color: inherit;
     -webkit-box-shadow: ${props => props.$redShadow ? 'inset 0px 0px 11px -3px rgba(255, 38, 38, 1)' : 'auto'};
     -moz-box-shadow: ${props => props.$redShadow ? 'inset 0px 0px 11px -3px rgba(255, 38, 38, 1)' : 'auto'};
     box-shadow: ${props => props.$redShadow ? 'inset 0px 0px 11px -3px rgba(255, 38, 38, 1)' : 'auto'};
