@@ -2,21 +2,18 @@ import { useState, useEffect, useContext } from 'react';
 import { Button, DisabledButton } from "../../styles"
 import { InputGroup, RequiredMessage } from "./styles"
 import { useNavigate } from 'react-router-dom';
-import CreatableSelect from 'react-select/creatable'
-import { Note, Tag } from '../../App';
-import { MultiValue } from 'react-select';
+import { Note, Tag } from '../../App'
 import { NotesContext, NotesContextType } from '../../context/NotesContext';
-import { ThemeContext } from '../../context/ThemeContext';
+import { TagsSelect } from '../TagsSelect';
 
 type NoteFormProps = {
   currentData?: Note
 }
 
 export const NoteForm = ({ currentData }: NoteFormProps) => {
-  const { theme } = useContext(ThemeContext);
+  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
+
   const {
-    tags: availableTags,
-    handleTagCreate: onTagCreate,
     handleNewNote: onSubmit,
     handleNoteEdit
   } = useContext(NotesContext) as NotesContextType;
@@ -24,7 +21,6 @@ export const NoteForm = ({ currentData }: NoteFormProps) => {
   const [titleValue, setTitleValue] = useState<string>('');
   const [contentValue, setContentValue] = useState<string>('');
   const [isValueEmpty, setIsValueEmpty] = useState<boolean>(false);
-  const [selectedTags, setSelectedTags] = useState<Tag[]>([]);
   const navigate = useNavigate();
   
   useEffect(() => {
@@ -69,74 +65,14 @@ export const NoteForm = ({ currentData }: NoteFormProps) => {
     }
   }
 
-  const handleTagsSelect = (tags: MultiValue<{label: string, value: string}>) => {
-    setSelectedTags(tags.map(tag => ({
-      id: tag.value,
-      label: tag.label
-    })))
-  }
-
-  const handleTagCreate = (label: string) => {
-    const newTag: Tag = {
-      id: new Date().valueOf().toString(),
-      label: label
-    }
-
-    onTagCreate(newTag);
-    setSelectedTags([...selectedTags, newTag]);
-  }
-
   return (
     <form onSubmit={handleSubmit}>
       <InputGroup>
         <label>Tags</label>
-        <CreatableSelect
-          isMulti
-          classNamePrefix={'Select'}
-          value={selectedTags.map(tag => ({
-            label: tag.label,
-            value: tag.id
-          }))}
-          options={availableTags.map(tag => ({
-            label: tag.label,
-            value: tag.id
-          }))}
-          onChange={handleTagsSelect}
-          onCreateOption={handleTagCreate}
-          id='tags'
-          styles={{
-            option: styles => ({
-              ...styles,
-              backgroundColor: theme.elements,
-              '&:hover': {
-                backgroundColor: theme.onHover
-              }
-            }),
-            control: styles => ({
-              ...styles,
-              borderColor: '#000',
-              borderRadius: 0,
-              backgroundColor: theme.elements,
-              '&:hover': {
-                borderColor: '#000'
-              }
-            }),
-            multiValue: styles => ({
-              ...styles,
-              backgroundColor: '#2f4eff'
-            }),
-            multiValueLabel: styles => ({
-              ...styles,
-              color: '#fff'
-            }),
-            multiValueRemove: styles => ({
-              ...styles,
-              ':hover': {
-                backgroundColor: '#90a0ff',
-                cursor: 'pointer'
-              }
-            })
-          }}
+        <TagsSelect
+          isCreatable
+          selectedTags={selectedTags}
+          setSelectedTags={setSelectedTags}
         />
       </InputGroup>
       <InputGroup $redShadow={isValueEmpty}>
