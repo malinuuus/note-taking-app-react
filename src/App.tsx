@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { HashRouter, Routes, Route } from 'react-router-dom';
 import { MainPage } from './pages/Main';
 import { NewNote } from './pages/NewNote';
 import { Note as NotePage } from './pages/Note';
@@ -73,7 +73,7 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <NotesContext.Provider value={{ notes, tags, handleNewNote, handleTagCreate, handleNoteEdit }}>
-        <Router>
+        <HashRouter>
           <Routes>
             <Route path='/' element={<MainPage />} />
             <Route path='/new' element={<NewNote />} />
@@ -83,7 +83,7 @@ function App() {
             </Route>
             <Route path='*' element={<NotFound title='Page not found' />} />
           </Routes>
-        </Router>
+        </HashRouter>
       </NotesContext.Provider>
     </ThemeProvider>
   )
