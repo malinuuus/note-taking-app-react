@@ -1,6 +1,10 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { css, styled } from "styled-components";
 
+export const Wrapper = styled.div`
+  padding: 30px;
+`
+
 export const hoverGrayStyle = css`
   transition: background-color 250ms;
 

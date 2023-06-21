@@ -1,11 +1,11 @@
 import { Link } from "react-router-dom"
-import { Button, FAIcon, Header } from "../../styles"
+import { Button, FAIcon, Header, Wrapper } from "../../styles"
 import { NoteForm } from "../../components/NoteForm"
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons"
 
 export const NewNote = () => {
   return (
-    <div>
+    <Wrapper>
       <Header>
         <h1>Create note</h1>
         <Link to='..'>
@@ -15,6 +15,6 @@ export const NewNote = () => {
         </Link>
       </Header>
       <NoteForm />
-    </div>
+    </Wrapper>
   )
 }

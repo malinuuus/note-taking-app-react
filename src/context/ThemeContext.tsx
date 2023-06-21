@@ -11,7 +11,8 @@ type Theme = {
   disabledFont: string,
   red: string,
   redOnHover: string,
-  boxShadow: string
+  boxShadow: string,
+  waveBackground: string
 }
 
 const themes: Record<ThemeType, Theme> = {
@@ -24,7 +25,8 @@ const themes: Record<ThemeType, Theme> = {
     disabledFont: '#dbdbdb',
     red: '#ff9f9f',
     redOnHover: '#ff8484',
-    boxShadow: '8px 8px 29px -11px rgba(66, 68, 90, 1)'
+    boxShadow: '8px 8px 29px -11px rgba(66, 68, 90, 1)',
+    waveBackground: '#dddddd'
   },
   dark: {
     background: '#292929',
@@ -35,7 +37,8 @@ const themes: Record<ThemeType, Theme> = {
     disabledFont: '#616161',
     red: '#ff4040',
     redOnHover: '#c72c2c',
-    boxShadow: 'none'
+    boxShadow: 'none',
+    waveBackground: '#202020'
   }
 }
 

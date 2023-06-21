@@ -1,7 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { Note as NoteType } from "../../App";
 import { ElementsGroup, Date, DeleteButton, Tag, TagsWrapper } from "./styles";
-import { Button, FAIcon, Header } from "../../styles";
+import { Button, FAIcon, Header, Wrapper } from "../../styles";
 import { dateFormat, timeFormat } from "../../utils/dateFormat";
 import { faTrashCan, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { NotFound } from "../NotFound";
@@ -23,7 +23,7 @@ export const Note = ({ notes, onDelete }: NoteProps) => {
   }
 
   return note ? (
-    <div>
+    <Wrapper>
       <Header>
         <h1>{note.title}</h1>
         <ElementsGroup>
@@ -53,7 +53,7 @@ export const Note = ({ notes, onDelete }: NoteProps) => {
       {note.content.split('\n').map((paragraph, i) => (
         <p key={i} style={{minHeight: '1em'}}>{paragraph}</p>
       ))}
-    </div>
+    </Wrapper>
   ) : (
     <NotFound title={'This note doesn\'t exist'} />
   )
