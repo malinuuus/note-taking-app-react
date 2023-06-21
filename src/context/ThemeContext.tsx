@@ -46,8 +46,8 @@ type ThemeContextType = {
 };
 
 export const ThemeContext = createContext<ThemeContextType>({ 
-  themeType: 'light',
-  theme: themes['light']
+  themeType: 'dark',
+  theme: themes['dark']
  });
 
 type ThemeProviderProps = {
@@ -57,25 +57,20 @@ type ThemeProviderProps = {
 export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
   const [themeType, setThemeType] = useState<ThemeType>('dark');
 
-  const setBodyTheme = (theme: ThemeType = themeType) => {
-    const { background, fontColor } = themes[theme];
+  const setBodyTheme = () => {
+    const { background, fontColor } = themes[themeType];
     document.body.style.backgroundColor = background;
     document.body.style.color = fontColor;
   }
 
-  const setTheme = (theme: ThemeType) => {
-    setBodyTheme(theme);
-    setThemeType(theme);
-  };
-
-  useEffect(() => setBodyTheme(), []);
+  useEffect(() => setBodyTheme(), [themeType]);
 
   return (
     <ThemeContext.Provider
       value={{
         themeType,
         theme: themes[themeType],
-        setTheme
+        setTheme: setThemeType
       }}
     >
       {children}
