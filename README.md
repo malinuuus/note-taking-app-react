@@ -15,6 +15,7 @@ Simple note-taking application built with React and Vite.
 - Styled Components 6.0.0 ![Styled Components](https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white&style=flat)
 - Font Awesome 6.4.0
 - React Select 5.7.3
+
 The app uses [Faker API](https://fakerapi.it/en) to fetch random notes.
 
 ## Instalation
