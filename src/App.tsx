@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { HashRouter, Routes, Route } from 'react-router-dom';
 import { MainPage } from './pages/Main';
 import { NewNote } from './pages/NewNote';
@@ -9,6 +9,8 @@ import { testNotes, testTags } from './testNotes';
 import { NotesContext } from './context/NotesContext';
 import { ThemeProvider } from 'styled-components';
 import { ThemeContext } from './context/ThemeContext';
+import { getNotes } from './utils/notesApi';
+import { Loader } from './components/Loader';
 
 export type Tag = {
   id: string
@@ -30,14 +32,30 @@ export type Note = {
 function App() {
   const { theme } = useContext(ThemeContext);
 
-  const [notes, setNotes] = useState<Note[]>(testNotes.map(note => {
-    return {
-      ...note,
-      createdAt: new Date(note.createdAt),
-      updatedAt: new Date(note.updatedAt)
-    }
-  }));
+  const [notes, setNotes] = useState<Note[]>([]);
   const [tags, setTags] = useState<Tag[]>(testTags);
+  const [isLoading, setIsLoading] = useState(true)
+
+  const fetchNotesData = async () => {
+    try {
+      const fetchedNotes = await getNotes(15)
+      setNotes(fetchedNotes)
+    } catch (err) {
+      // if fetchings fails, load testNotes
+      setNotes(testNotes.map(note => ({
+        ...note,
+        createdAt: new Date(note.createdAt),
+        updatedAt: new Date(note.updatedAt)
+      })))
+      console.log(err)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    fetchNotesData()
+  }, [])
 
   const handleNewNote = (newNote: NewNote) => {
     setNotes([{
@@ -70,7 +88,9 @@ function App() {
     setTags([...tags, newTag])
   }
 
-  return (
+  return isLoading ? (
+    <Loader />
+  ) : (
     <ThemeProvider theme={theme}>
       <NotesContext.Provider value={{ notes, tags, handleNewNote, handleTagCreate, handleNoteEdit }}>
         <HashRouter>
