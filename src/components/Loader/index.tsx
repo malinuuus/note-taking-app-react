@@ -1,14 +1,10 @@
-import { styled } from "styled-components"
-
-const LoaderWrapper = styled.div`
-  text-align: center;
-  margin-top: 10%;
-`
+import { LoaderWrapper, Spinner } from './styles'
 
 export const Loader = () => {
   return (
     <LoaderWrapper>
-      <h1>Loading...</h1>
+      <Spinner $size={80}></Spinner>
+      <p>loading...</p>
     </LoaderWrapper>
   )
 }
