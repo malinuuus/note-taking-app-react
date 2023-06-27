@@ -41,11 +41,14 @@ export const MainPage = () => {
         <Header>
           <h1>My notes</h1>
           <ElementsGroup>
-            <Button onClick={() => setTheme!(themeType === 'dark' ? 'light' : 'dark')}>
+            <Button
+              onClick={() => setTheme!(themeType === 'dark' ? 'light' : 'dark')}
+              aria-label='toggle theme'
+            >
               {themeType === 'dark' ? <FAIcon icon={faSun} /> : <FAIcon icon={faMoon} />}
             </Button>
             <Link to='/new'>
-              <Button>
+              <Button aria-label='add a note'>
                 <FAIcon icon={faPlus} />
               </Button>
             </Link>

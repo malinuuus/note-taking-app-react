@@ -35,8 +35,8 @@ const themes: Record<ThemeType, Theme> = {
     onHover: '#4f4f4f',
     fontColor: '#fff',
     disabledFont: '#616161',
-    red: '#ff4040',
-    redOnHover: '#c72c2c',
+    red: '#b71818',
+    redOnHover: '#8b1d1d',
     boxShadow: 'none',
     waveBackground: '#202020'
   }

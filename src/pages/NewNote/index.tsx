@@ -8,8 +8,8 @@ export const NewNote = () => {
     <Wrapper>
       <Header>
         <h1>Create note</h1>
-        <Link to='..'>
-          <Button>
+        <Link to='..' aria-label='go back'>
+          <Button aria-label='go back'>
             <FAIcon icon={faArrowLeft} />
           </Button>
         </Link>

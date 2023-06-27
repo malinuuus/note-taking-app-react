@@ -37,8 +37,8 @@ export const Note = ({ notes, onDelete }: NoteProps) => {
               <span>Edit</span>
             </Button>
           </Link>
-          <Link to='..'>
-            <Button>
+          <Link to='..' aria-label='go back'>
+            <Button aria-label='go back'>
               <FAIcon icon={faArrowLeft} />
             </Button>
           </Link>

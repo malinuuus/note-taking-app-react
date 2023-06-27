@@ -50,6 +50,7 @@ export const TagsSelect = ({ isCreatable = false, selectedTags, setSelectedTags 
       onChange={handleTagsSelect}
       onCreateOption={handleTagCreate}
       id='tags'
+      aria-label='select tags'
       styles={{
         option: styles => ({
           ...styles,
@@ -105,6 +106,7 @@ export const TagsSelect = ({ isCreatable = false, selectedTags, setSelectedTags 
       }))}
       onChange={handleTagsSelect}
       id='tags'
+      aria-label='select-tags'
       styles={{
         option: styles => ({
           ...styles,
