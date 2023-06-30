@@ -34,8 +34,8 @@ export const getNotes = async (count: number) => {
       ...note,
       id: note.id.toString(),
       tags: testTags.filter((tag) => tag.id === note.tagId.toString()),
-      createdAt: new Date(note.createdAt.date),
-      updatedAt: new Date(note.updatedAt.date)
+      createdAt: new Date(note.createdAt.date.slice(0, -7).replace(/-/g, '/')),
+      updatedAt: new Date(note.updatedAt.date.slice(0, -7).replace(/-/g, '/'))
     }))
     .sort((a, b) => b.updatedAt.getTime() - a.updatedAt.getTime())
 

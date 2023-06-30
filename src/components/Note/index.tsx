@@ -7,15 +7,15 @@ type NoteProps = {
   animationDelay: number
 }
 
-export const Note = ({ note, animationDelay }: NoteProps) => {
+export const Note = ({ note: { id, title, updatedAt }, animationDelay }: NoteProps) => {
   return (
-    <NoteElement to={`/${note.id}`} $delay={animationDelay}>
-      <p>{note.title}</p>
-      {note.updatedAt.toDateString() === new Date().toDateString() ? (
-        <DateElement>{timeFormat(note.updatedAt)}</DateElement>
-      ) : (
-        <DateElement>{dateFormat(note.updatedAt)}</DateElement>
-      )}
+    <NoteElement to={`/${id}`} $delay={animationDelay}>
+      <p>{title}</p>
+      <DateElement>
+        {updatedAt.toDateString() === new Date().toDateString()
+          ? timeFormat(updatedAt)
+          : dateFormat(updatedAt)}
+      </DateElement>
     </NoteElement>
   )
 }

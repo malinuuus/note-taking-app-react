@@ -1,5 +1,11 @@
 const dateTimeFormat = (options: Intl.DateTimeFormatOptions, date: Date): string => {
-  return new Intl.DateTimeFormat('en-US', options).format(date);
+  try {
+    const formatedDate = new Intl.DateTimeFormat('en-US', options).format(date)
+    return formatedDate
+  } catch (err) {
+    console.log(err)
+    return ''
+  }
 }
 
 export const dateFormat = (date: Date): string => {
