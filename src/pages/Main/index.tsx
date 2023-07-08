@@ -1,5 +1,5 @@
-import { useContext, useMemo, useState } from 'react'
-import { Link } from "react-router-dom"
+import { useContext, useEffect, useMemo, useState } from 'react'
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { Note as NoteElement } from '../../components/Note'
 import { Input, InputGroup, NotesContainer } from "./styles"
 import { Header, Button, FAIcon, Wrapper } from "../../styles"
@@ -10,8 +10,16 @@ import { ThemeContext } from '../../context/ThemeContext'
 import { Tag } from '../../App'
 import { TagsSelect } from '../../components/TagsSelect'
 import { Wave } from '../../components/Wave'
+import { Pagination } from '../../components/Pagination'
+
+function useQuery() {
+  const { search } = useLocation();
+
+  return useMemo(() => new URLSearchParams(search), [search]);
+}
 
 const animationDelayFactor = .2;
+const elementsPerPage = 18
 
 export const MainPage = () => {
   const [searchValue, setSearchValue] = useState<string>('');
@@ -19,6 +27,18 @@ export const MainPage = () => {
 
   const { notes } = useContext(NotesContext) as NotesContextType;
   const { themeType, setTheme } = useContext(ThemeContext);
+
+  const navigate = useNavigate()
+  const query = useQuery()
+  const currentPage = query.has('page') ? parseInt(query.get('page') as string, 10) : 1
+  const pagesCount = Math.ceil(notes.length / elementsPerPage)
+
+  useEffect(() => {
+    if (currentPage < 1 || currentPage > pagesCount) {
+      navigate('/')
+    }
+    window.scrollTo(0, 0)
+  })
 
   const filteredNotes = useMemo(() => {
     let filteredNotes = notes.filter(({ title, content }) => {
@@ -70,18 +90,24 @@ export const MainPage = () => {
         <NotesContainer>
         {filteredNotes.length > 0 ? (
           <>
-            {filteredNotes.map((note, i) => (
-              <NoteElement
-                key={note.id}
-                note={note}
-                animationDelay={i * animationDelayFactor}
-              />
+            {filteredNotes
+              .slice(elementsPerPage * (currentPage - 1), elementsPerPage * currentPage)
+              .map((note, i) => (
+                <NoteElement
+                  key={note.id}
+                  note={note}
+                  animationDelay={i * animationDelayFactor}
+                />
             ))}
           </>
         ) : (
           <p>Nothing found</p>
         )}
         </NotesContainer>
+        <Pagination
+          pagesCount={pagesCount}
+          currentPage={currentPage}
+        />
       </Wrapper>
       <Wave />
     </>
