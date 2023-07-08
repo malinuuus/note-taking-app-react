@@ -46,7 +46,8 @@ export const PaginationWrapper = styled.div`
     padding-left: 0;
   }
 
-  .disabled {
+  .disabled,
+  .active {
     pointer-events: none;
   }
   

@@ -28,18 +28,6 @@ export const MainPage = () => {
   const { notes } = useContext(NotesContext) as NotesContextType;
   const { themeType, setTheme } = useContext(ThemeContext);
 
-  const navigate = useNavigate()
-  const query = useQuery()
-  const currentPage = query.has('page') ? parseInt(query.get('page') as string, 10) : 1
-  const pagesCount = Math.ceil(notes.length / elementsPerPage)
-
-  useEffect(() => {
-    if (currentPage < 1 || currentPage > pagesCount) {
-      navigate('/')
-    }
-    window.scrollTo(0, 0)
-  })
-
   const filteredNotes = useMemo(() => {
     let filteredNotes = notes.filter(({ title, content }) => {
         const lowerVal = searchValue.toLowerCase()
@@ -54,6 +42,18 @@ export const MainPage = () => {
     
     return filteredNotes
   }, [selectedTags, searchValue])
+
+  const navigate = useNavigate()
+  const query = useQuery()
+  const currentPage = query.has('page') ? parseInt(query.get('page') as string, 10) : 1
+  const pagesCount = Math.ceil(filteredNotes.length / elementsPerPage) || 1
+
+  useEffect(() => {
+    if (currentPage < 1 || currentPage > pagesCount) {
+      navigate('/')
+    }
+    window.scrollTo(0, 0)
+  })
 
   return (
     <>
