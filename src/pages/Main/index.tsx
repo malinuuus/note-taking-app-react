@@ -1,8 +1,8 @@
 import { useContext, useEffect, useMemo, useState } from 'react'
 import { Link, useLocation, useNavigate } from "react-router-dom"
 import { Note as NoteElement } from '../../components/Note'
-import { Input, InputGroup, NotesContainer } from "./styles"
-import { Header, Button, FAIcon, Wrapper } from "../../styles"
+import { Input, InputGroup, MainWrapper, NotesContainer } from "./styles"
+import { Header, Button, FAIcon } from "../../styles"
 import { faMagnifyingGlass, faMoon, faPlus, faSun } from '@fortawesome/free-solid-svg-icons'
 import { NotesContext, NotesContextType } from '../../context/NotesContext'
 import { ElementsGroup } from '../Note/styles'
@@ -57,58 +57,60 @@ export const MainPage = () => {
 
   return (
     <>
-      <Wrapper>
-        <Header>
-          <h1>My notes</h1>
-          <ElementsGroup>
-            <Button
-              onClick={() => setTheme!(themeType === 'dark' ? 'light' : 'dark')}
-              aria-label='toggle theme'
-            >
-              {themeType === 'dark' ? <FAIcon icon={faSun} /> : <FAIcon icon={faMoon} />}
-            </Button>
-            <Link to='/new'>
-              <Button aria-label='add a note'>
-                <FAIcon icon={faPlus} />
+      <MainWrapper>
+        <div className='content'>
+          <Header>
+            <h1>My notes</h1>
+            <ElementsGroup>
+              <Button
+                onClick={() => setTheme!(themeType === 'dark' ? 'light' : 'dark')}
+                aria-label='toggle theme'
+              >
+                {themeType === 'dark' ? <FAIcon icon={faSun} /> : <FAIcon icon={faMoon} />}
               </Button>
-            </Link>
-          </ElementsGroup>
-        </Header>
-        <InputGroup>
-          <FAIcon icon={faMagnifyingGlass} />
-          <Input
-            type="text"
-            placeholder="search notes..."
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
+              <Link to='/new'>
+                <Button aria-label='add a note'>
+                  <FAIcon icon={faPlus} />
+                </Button>
+              </Link>
+            </ElementsGroup>
+          </Header>
+          <InputGroup>
+            <FAIcon icon={faMagnifyingGlass} />
+            <Input
+              type="text"
+              placeholder="search notes..."
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+            />
+          </InputGroup>
+          <TagsSelect
+            selectedTags={selectedTags}
+            setSelectedTags={setSelectedTags}
           />
-        </InputGroup>
-        <TagsSelect
-          selectedTags={selectedTags}
-          setSelectedTags={setSelectedTags}
-        />
-        <NotesContainer>
-        {filteredNotes.length > 0 ? (
-          <>
-            {filteredNotes
-              .slice(elementsPerPage * (currentPage - 1), elementsPerPage * currentPage)
-              .map((note, i) => (
-                <NoteElement
-                  key={note.id}
-                  note={note}
-                  animationDelay={i * animationDelayFactor}
-                />
-            ))}
-          </>
-        ) : (
-          <p>Nothing found</p>
-        )}
-        </NotesContainer>
+          <NotesContainer>
+          {filteredNotes.length > 0 ? (
+            <>
+              {filteredNotes
+                .slice(elementsPerPage * (currentPage - 1), elementsPerPage * currentPage)
+                .map((note, i) => (
+                  <NoteElement
+                    key={note.id}
+                    note={note}
+                    animationDelay={i * animationDelayFactor}
+                  />
+              ))}
+            </>
+          ) : (
+            <p>Nothing found</p>
+          )}
+          </NotesContainer>
+        </div>
         <Pagination
           pagesCount={pagesCount}
           currentPage={currentPage}
         />
-      </Wrapper>
+      </MainWrapper>
       <Wave />
     </>
   )
