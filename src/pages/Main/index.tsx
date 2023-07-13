@@ -1,8 +1,8 @@
-import { useContext, useMemo, useState } from 'react'
-import { Link } from "react-router-dom"
+import { useContext, useEffect, useMemo, useState } from 'react'
+import { Link, useLocation, useNavigate } from "react-router-dom"
 import { Note as NoteElement } from '../../components/Note'
-import { Input, InputGroup, NotesContainer } from "./styles"
-import { Header, Button, FAIcon, Wrapper } from "../../styles"
+import { Input, InputGroup, MainWrapper, NotesContainer } from "./styles"
+import { Header, Button, FAIcon } from "../../styles"
 import { faMagnifyingGlass, faMoon, faPlus, faSun } from '@fortawesome/free-solid-svg-icons'
 import { NotesContext, NotesContextType } from '../../context/NotesContext'
 import { ElementsGroup } from '../Note/styles'
@@ -10,8 +10,16 @@ import { ThemeContext } from '../../context/ThemeContext'
 import { Tag } from '../../App'
 import { TagsSelect } from '../../components/TagsSelect'
 import { Wave } from '../../components/Wave'
+import { Pagination } from '../../components/Pagination'
+
+function useQuery() {
+  const { search } = useLocation();
+
+  return useMemo(() => new URLSearchParams(search), [search]);
+}
 
 const animationDelayFactor = .2;
+const elementsPerPage = 18
 
 export const MainPage = () => {
   const [searchValue, setSearchValue] = useState<string>('');
@@ -35,54 +43,74 @@ export const MainPage = () => {
     return filteredNotes
   }, [selectedTags, searchValue])
 
+  const navigate = useNavigate()
+  const query = useQuery()
+  const currentPage = query.has('page') ? parseInt(query.get('page') as string, 10) : 1
+  const pagesCount = Math.ceil(filteredNotes.length / elementsPerPage) || 1
+
+  useEffect(() => {
+    if (currentPage < 1 || currentPage > pagesCount) {
+      navigate('/')
+    }
+    window.scrollTo(0, 0)
+  })
+
   return (
     <>
-      <Wrapper>
-        <Header>
-          <h1>My notes</h1>
-          <ElementsGroup>
-            <Button
-              onClick={() => setTheme!(themeType === 'dark' ? 'light' : 'dark')}
-              aria-label='toggle theme'
-            >
-              {themeType === 'dark' ? <FAIcon icon={faSun} /> : <FAIcon icon={faMoon} />}
-            </Button>
-            <Link to='/new'>
-              <Button aria-label='add a note'>
-                <FAIcon icon={faPlus} />
+      <MainWrapper>
+        <div className='content'>
+          <Header>
+            <h1>My notes</h1>
+            <ElementsGroup>
+              <Button
+                onClick={() => setTheme!(themeType === 'dark' ? 'light' : 'dark')}
+                aria-label='toggle theme'
+              >
+                {themeType === 'dark' ? <FAIcon icon={faSun} /> : <FAIcon icon={faMoon} />}
               </Button>
-            </Link>
-          </ElementsGroup>
-        </Header>
-        <InputGroup>
-          <FAIcon icon={faMagnifyingGlass} />
-          <Input
-            type="text"
-            placeholder="search notes..."
-            value={searchValue}
-            onChange={(e) => setSearchValue(e.target.value)}
+              <Link to='/new'>
+                <Button aria-label='add a note'>
+                  <FAIcon icon={faPlus} />
+                </Button>
+              </Link>
+            </ElementsGroup>
+          </Header>
+          <InputGroup>
+            <FAIcon icon={faMagnifyingGlass} />
+            <Input
+              type="text"
+              placeholder="search notes..."
+              value={searchValue}
+              onChange={(e) => setSearchValue(e.target.value)}
+            />
+          </InputGroup>
+          <TagsSelect
+            selectedTags={selectedTags}
+            setSelectedTags={setSelectedTags}
           />
-        </InputGroup>
-        <TagsSelect
-          selectedTags={selectedTags}
-          setSelectedTags={setSelectedTags}
+          <NotesContainer>
+          {filteredNotes.length > 0 ? (
+            <>
+              {filteredNotes
+                .slice(elementsPerPage * (currentPage - 1), elementsPerPage * currentPage)
+                .map((note, i) => (
+                  <NoteElement
+                    key={note.id}
+                    note={note}
+                    animationDelay={i * animationDelayFactor}
+                  />
+              ))}
+            </>
+          ) : (
+            <p>Nothing found</p>
+          )}
+          </NotesContainer>
+        </div>
+        <Pagination
+          pagesCount={pagesCount}
+          currentPage={currentPage}
         />
-        <NotesContainer>
-        {filteredNotes.length > 0 ? (
-          <>
-            {filteredNotes.map((note, i) => (
-              <NoteElement
-                key={note.id}
-                note={note}
-                animationDelay={i * animationDelayFactor}
-              />
-            ))}
-          </>
-        ) : (
-          <p>Nothing found</p>
-        )}
-        </NotesContainer>
-      </Wrapper>
+      </MainWrapper>
       <Wave />
     </>
   )

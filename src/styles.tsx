@@ -39,4 +39,8 @@ export const Header = styled.div`
 export const FAIcon = styled(FontAwesomeIcon)`
   margin: 0 5px;
   color: ${props => props.theme.fontColor};
+
+  &:hover {
+    color: inherit;
+  }
 `

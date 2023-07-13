@@ -38,7 +38,7 @@ function App() {
 
   const fetchNotesData = async () => {
     try {
-      const fetchedNotes = await getNotes(15)
+      const fetchedNotes = await getNotes(40)
       setNotes(fetchedNotes)
     } catch (err) {
       // if fetchings fails, load testNotes
