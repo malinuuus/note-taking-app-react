@@ -33,7 +33,7 @@ export const PaginationWrapper = styled.div`
     transition: .2s color linear;
   }
 
-  ul > li:not(.active):hover,
+  ul > li:not(.active):not(.disabled):hover,
   ul > li:hover a:not(.disabled) .fa-icon {
     color: #36f5bf;
   }

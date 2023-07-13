@@ -7,6 +7,7 @@ Simple note-taking application built with React and Vite.
 - Search notes by title or content
 - Toggle light/dark mode
 - Sorting by last update date
+- Pagination at the bottom of the page
 
 ## Technologies used
 - React 18.2.0 + TypeScript 5.0.2 ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB&style=flat) ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white&style=flat)
