@@ -7,7 +7,7 @@ import { PaginationNumber } from './PaginationNumber'
 type PaginationProps = {
   pagesCount: number
   currentPage: number
-  siblingCount: number
+  siblingCount?: number
 }
 
 export const Pagination = ({ pagesCount, currentPage, siblingCount = 1 }: PaginationProps) => {
