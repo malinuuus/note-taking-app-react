@@ -58,12 +58,13 @@ type ThemeProviderProps = {
 }
 
 export const ThemeProvider: FC<ThemeProviderProps> = ({ children }) => {
-  const [themeType, setThemeType] = useState<ThemeType>('dark');
+  const [themeType, setThemeType] = useState<ThemeType>(localStorage.getItem('themeType') as ThemeType || 'light');
 
   const setBodyTheme = () => {
     const { background, fontColor } = themes[themeType];
     document.body.style.backgroundColor = background;
     document.body.style.color = fontColor;
+    localStorage.setItem('themeType', themeType)
   }
 
   useEffect(() => setBodyTheme(), [themeType]);
