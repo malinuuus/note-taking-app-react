@@ -1,12 +1,14 @@
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { Note as NoteType } from "../../App";
-import { ElementsGroup, Date, DeleteButton, Tag, TagsWrapper } from "./styles";
+import { ElementsGroup, Date, DeleteButton, Tag, TagsWrapper, NoteParagraph } from "./styles";
 import { Button, FAIcon, Header, Wrapper } from "../../styles";
 import { dateFormat, timeFormat } from "../../utils/dateFormat";
 import { faTrashCan, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { NotFound } from "../NotFound";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 import { useEffect } from "react";
+
+const urlRegex = /(https?:\/\/[^\s]+)/g
 
 type NoteProps = {
   notes: NoteType[]
@@ -17,6 +19,7 @@ export const Note = ({ notes, onDelete }: NoteProps) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const note: NoteType | undefined = notes.find(noteElem => noteElem.id == id);
+  const noteContent = note ? note.content.replace(urlRegex, (url) => `<a href="${url}" target="_blank">${url}</a>`) : ''
 
   const handleDelete = () => {
     onDelete(note!.id);
@@ -61,8 +64,11 @@ export const Note = ({ notes, onDelete }: NoteProps) => {
         ))}
       </TagsWrapper>
       <Date>Last updated on {dateFormat(note.updatedAt)} at {timeFormat(note.updatedAt)}</Date>
-      {note.content.split('\n').map((paragraph, i) => (
-        <p key={i} style={{minHeight: '1em'}}>{paragraph}</p>
+      {noteContent.split('\n').map((paragraph, i) => (
+        <NoteParagraph
+          key={i}
+          dangerouslySetInnerHTML={{ __html: paragraph }}
+        ></NoteParagraph>
       ))}
     </Wrapper>
   ) : (

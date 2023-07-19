@@ -35,3 +35,12 @@ export const Tag = styled.span`
   padding: 5px 10px;
   border-radius: 5px;
 `;
+
+export const NoteParagraph = styled.p`
+  word-break: break-word;
+  min-height: 1.4em;
+
+  a {
+    color: #878787;
+  }
+`
