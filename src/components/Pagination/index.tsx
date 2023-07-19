@@ -44,7 +44,7 @@ export const Pagination = ({ pagesCount, currentPage, siblingCount = 1 }: Pagina
               (num <= currentPage + siblingCount || num === siblingCount + 2)
           )
           .map((num) => (
-            <PaginationNumber currentPage={currentPage} pageNumber={num} />
+            <PaginationNumber key={num} currentPage={currentPage} pageNumber={num} />
           ))}
         {currentPage + siblingCount + 1 < pagesCount && (
           <li className='disabled'>

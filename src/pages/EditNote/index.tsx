@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { Link, useParams } from "react-router-dom"
 import { Note } from "../../App"
 import { Button, FAIcon, Header, Wrapper } from "../../styles"
@@ -12,6 +13,16 @@ type EditNoteProps = {
 export const EditNote = ({ notes }: EditNoteProps) => {
   const { id } = useParams();
   const note: Note | undefined = notes.find(noteElem => noteElem.id == id);
+
+  useEffect(() => {
+    if (note) {
+      document.title = note.title
+    }
+
+    return () => {
+      document.title = 'Note taking app'
+    }
+  }, [])
 
   return note ? (
     <Wrapper>

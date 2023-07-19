@@ -6,6 +6,7 @@ import { dateFormat, timeFormat } from "../../utils/dateFormat";
 import { faTrashCan, faPenToSquare } from "@fortawesome/free-regular-svg-icons";
 import { NotFound } from "../NotFound";
 import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { useEffect } from "react";
 
 type NoteProps = {
   notes: NoteType[]
@@ -21,6 +22,16 @@ export const Note = ({ notes, onDelete }: NoteProps) => {
     onDelete(note!.id);
     navigate('/');
   }
+
+  useEffect(() => {
+    if (note) {
+      document.title = note.title
+    }
+
+    return () => {
+      document.title = 'Note taking app'
+    }
+  }, [])
 
   return note ? (
     <Wrapper>
